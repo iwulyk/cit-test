@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.citiproject.Calculations.CalculationsService;
@@ -44,65 +45,65 @@ public class TradeController {
 	List<Trade> tradelist;
 	
 	RandomValueGenerator rvg = new RandomValueGenerator();
-	@GetMapping("/masterdb")
+	@RequestMapping(method=RequestMethod.GET , value="/masterdb")
 	public List<FixedIncomeSecurity> getMasterDB() {
 		return masterDB;
 	}
 	
-	@GetMapping("/trades")
+	@RequestMapping(method=RequestMethod.GET , value="/trades")
 	public ResponseEntity<List<Trade>> getAllTrades() {
 		tradelist = tradeService.getAllTrades().getBody();
 		return tradeService.getAllTrades();
 	}
 
-	@GetMapping("/trades/{id}")
+	@RequestMapping(method=RequestMethod.GET , value="/trades/{id}")
 	public ResponseEntity<Trade> getTradeById(@PathVariable("id") long id) {
 		return tradeService.getTradeById(id);
 	}
 
 	
-	@GetMapping(value = "/trades/list")
+	@RequestMapping(method=RequestMethod.GET , value="/trades/list")
 	public List<Trade> getTradeList() {
 		 return tradelist;	
 	}
 	
-	@PostMapping(value = "/trades/add")
+	@RequestMapping(method=RequestMethod.POST , value="/trades/add")
 	public ResponseEntity<Trade> addTrade(@RequestBody Trade newTrade) {
 		return tradeService.addTradeByUser(tradelist, newTrade, masterDB);
 	}
 	
-	@GetMapping("/couponincome")
+	@RequestMapping(method=RequestMethod.GET , value="/couponincome")
 	public Map<String, Double> getCouponIncomes(){
 		return calculationsService.Couponincome(tradelist,masterDB);
 	}
 	
-	@GetMapping("/acccouponincome")
+	@RequestMapping(method=RequestMethod.GET , value="/acccouponincome")
 	public Map<String, Double> getAccruedCouponIncomes(){
 		return calculationsService.Accruedcouponincome(tradelist,masterDB);
 	}
 	
-	@GetMapping("/closingfund")
+	@RequestMapping(method=RequestMethod.GET , value="/closingfund")
 	public Double getClosingFund(){
 		return calculationsService.Closingfund(tradelist,masterDB);
 	}
 
-	@GetMapping("/pnl")
+	@RequestMapping(method=RequestMethod.GET , value="/pnl")
 	public Map<String, Double> getProfitAndLoss(){
 		return calculationsService.PLpersecurity(tradelist,masterDB);
 	}
 	
-	@GetMapping("/upnl")
+	@RequestMapping(method=RequestMethod.GET , value="/upnl")
 	public Map<String, Double> getUnrealisedProfitAndLoss(){
 		return calculationsService.UPLpersecurity(tradelist,masterDB);
 	}
 	
-	@GetMapping("/mvalue")
+	@RequestMapping(method=RequestMethod.GET , value="/mvalue")
 	public double getMarketValuation(){
 		return calculationsService.MarketValuation(tradelist, masterDB);
 	}
 	
 
-	@PostMapping(value = "/trades/all")
+	@RequestMapping(method=RequestMethod.POST , value="/trades/all")
 	public List<Trade> createTradeList() {
 		masterDB=rvg.UpdateMasterDb(masterDB);
 		int i=0;
@@ -118,13 +119,9 @@ public class TradeController {
 		return tradelist;
 	}
 	
-	@GetMapping("/logout")
+	@RequestMapping(method=RequestMethod.GET , value="/logout")
 	public void userLogout() {
 		tradelist.clear();
-		
-		System.out.println("Inside logout");
-
-
 	}
 	
 }
