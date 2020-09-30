@@ -137,7 +137,7 @@ public class FixedIncomeSecurity {
 		this.finalprice = rvg.RandomPriceCalculator(faceValue);
 		this.openingqty = rvg.RandomOpeningQuantityCalculator();
 		this.bonusdate = null;
-		this.openingfund = 0;
+		this.openingfund=0;
 	}
 
 	public FixedIncomeSecurity(String isin, int faceValue, String securityname, float couponRate, int maturityyear,
@@ -157,6 +157,6 @@ public class FixedIncomeSecurity {
 		this.finalprice = rvg.RandomPriceCalculator(faceValue);
 		this.openingqty = rvg.RandomOpeningQuantityCalculator();
 		this.bonusdate = null;
-		this.openingfund = 0;
+		this.openingfund=0;
 	}
 }

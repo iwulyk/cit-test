@@ -1,5 +1,6 @@
 package com.citiproject.TradeGenerator;
 
+import java.util.Date;
 import java.util.GregorianCalendar; 
 
 import javax.persistence.Column;

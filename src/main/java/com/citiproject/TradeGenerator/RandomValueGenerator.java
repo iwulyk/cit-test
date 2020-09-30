@@ -51,8 +51,7 @@ public class RandomValueGenerator {
 		RandomValueGenerator gc = new RandomValueGenerator();
 		FixedIncomeSecurity bonussecurity = gc.RandomElement(Masterdb);
 		GregorianCalendar bonusdate = gc.RandomDate();
-		while (bonusdate.after(bonussecurity.getMaturitydate())
-				&& bonusdate.after(bonussecurity.getCouponpaymentdate())) {
+		while (bonusdate.after(bonussecurity.getMaturitydate()) && bonusdate.after(bonussecurity.getCouponpaymentdate())) {
 			bonusdate = gc.RandomDate();
 		}
 		bonussecurity.setBonusdate(bonusdate);
@@ -63,12 +62,10 @@ public class RandomValueGenerator {
 			FixedIncomeSecurity updatesecurity = Masterdb.get(i);
 			updatesecurity.setOpeningfund(openingfund);
 			Masterdb.set(i, updatesecurity);
-			System.out.println(updatesecurity.getSecurityname() + " : openingprice: " + updatesecurity.getOpeningprice()
-					+ " : qty : " + updatesecurity.getOpeningqty() + "   :finalprice:" + updatesecurity.getFinalprice()
-					+ "   :openingfund:" + updatesecurity.getOpeningfund());
+			System.out.println(updatesecurity.getSecurityname()+ " : openingprice: "+ updatesecurity.getOpeningprice()+ " : qty : "+ updatesecurity.getOpeningqty()+"   :finalprice:"+updatesecurity.getFinalprice()+"   :openingfund:"+updatesecurity.getOpeningfund() );
 			i++;
 		}
-		System.out.println(bonusdate + "              " + bonussecurity.getSecurityname());
+		System.out.println(bonusdate +"              "+bonussecurity.getSecurityname());
 		return Masterdb;
 	}
 }
