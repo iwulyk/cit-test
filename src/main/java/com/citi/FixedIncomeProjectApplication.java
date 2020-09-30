@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * bucket_password
  * redis_password
  * root_password
+ * un
+ * unique
  * @author Val.Sylenko
  *
  */
