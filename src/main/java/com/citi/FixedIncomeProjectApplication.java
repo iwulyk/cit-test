@@ -1,7 +1,4 @@
-package com.citiproject;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+package com.citi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,8 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FixedIncomeProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FixedIncomeProjectApplication.class, args);
-		
+		SpringApplication.run(FixedIncomeProjectApplication.class, args);		
 	}
 
 }

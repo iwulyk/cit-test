@@ -1,16 +1,26 @@
-package com.citiproject.TradeGenerator;
+package com.citi.algorithms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.citi.controller.TradeController;
+import com.citi.entity.FixedIncomeSecurity;
+import com.citi.entity.RandomValueGenerator;
+import com.citi.entity.Trade;
+import com.citi.repositories.TradeRepository;
 
 @Service
 public class TradeService {
@@ -22,7 +32,13 @@ public class TradeService {
 
 	RandomValueGenerator randomTrade = new RandomValueGenerator();
 
+	Logger logger = LoggerFactory.getLogger(TradeService.class);
+	
+	//GET ALL TRADES FUNCTION
 	public ResponseEntity<List<Trade>> getAllTrades() {
+		
+		logger.debug("############# INSIDE GET ALL TRADES FUNCTION #############");
+		
 		List<Trade> traders = new ArrayList<>();
 		try {
 			tradeRepository.findAll().forEach(traders::add);
@@ -36,7 +52,11 @@ public class TradeService {
 		}
 	}
 
+	//GET TRADE BY ID FUNCTION
 	public ResponseEntity<Trade> getTradeById(long id) {
+		
+		logger.debug("############# INSIDE GET TRADE BY ID FUNCTION #############");
+		
 		Optional<Trade> tradeData = tradeRepository.findById(id);
 
 		if (tradeData.isPresent()) {
@@ -46,8 +66,11 @@ public class TradeService {
 		}
 	}
 
+	//GENERATE INITIAL TRADES FUNCTION
 	public List<Trade> generateInitialTrades(List<FixedIncomeSecurity> masterdb) { 
 
+		logger.debug("############# INSIDE GENERATE INITIAL TRADES FUNCTION #############");
+		
 		List<Trade> tradelist = new ArrayList<>();
 		GregorianCalendar newyear = new GregorianCalendar();
 		newyear.set(Calendar.YEAR, 2021);
@@ -55,7 +78,7 @@ public class TradeService {
 		newyear.set(Calendar.DATE, 01);
 		System.out.println("generating trade");
 
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 12; i++) {
 			System.out.println("i" + i);
 
 			FixedIncomeSecurity randomSecurity = randomTrade.RandomElement(masterdb);
@@ -160,7 +183,7 @@ public class TradeService {
 				trade.setSecurityname(security.getSecurityname());
 				trade.setIsin(security.getIsin());
 				trade.setPrice(security.getFaceValue());
-				trade.setQuantity(a + b);
+				trade.setQuantity(a + (b/20));
 				trade.setDate(security.getMaturitydate());
 				trade.setTradetype("Sell");
 				trade.setCouponRate(security.getCouponRate());
@@ -179,14 +202,20 @@ public class TradeService {
 			}
 			i++;
 		}
-		tradelist.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+		Collections.sort(tradelist, new Comparator<Trade>() {
+	        @Override
+	        public int compare(Trade object1, Trade object2) {
+	            return (int) (object1.getDate().compareTo(object2.getDate()));
+	        }
+	    });
 		System.out.println("complete");
 		return tradelist;
 	}
 
+	//ADD TRADE BY USER FUNCTION
 	public ResponseEntity<Trade> addTradeByUser(List<Trade> tradelist, Trade newTrade, List<FixedIncomeSecurity> masterDB) {
 		
-		System.out.println("hello start");
+		logger.debug("############# INSIDE ADD TRADE BY USER FUNCTION #############");
 		
 		int openfund = masterDB.get(0).getOpeningfund();
 		int opensecurity = 10000;

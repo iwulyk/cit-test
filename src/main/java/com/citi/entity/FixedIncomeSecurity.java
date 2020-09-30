@@ -1,4 +1,4 @@
-package com.citiproject.TradeGenerator;
+package com.citi.entity;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -153,7 +153,12 @@ public class FixedIncomeSecurity {
 		this.maturitydate = gc;
 		this.couponRate = couponRate;
 		RandomValueGenerator rvg = new RandomValueGenerator();
-		this.openingprice = rvg.RandomPriceCalculator(faceValue);
+		int finalopeningprice =0 ;
+		while(rvg.RandomPriceCalculator(faceValue) > faceValue)
+		{
+			finalopeningprice = rvg.RandomPriceCalculator(faceValue);
+		}
+		this.openingprice =finalopeningprice;
 		this.finalprice = rvg.RandomPriceCalculator(faceValue);
 		this.openingqty = rvg.RandomOpeningQuantityCalculator();
 		this.bonusdate = null;

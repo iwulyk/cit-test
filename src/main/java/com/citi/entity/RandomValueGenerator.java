@@ -1,4 +1,4 @@
-package com.citiproject.TradeGenerator;
+package com.citi.entity;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

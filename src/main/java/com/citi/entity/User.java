@@ -1,4 +1,4 @@
-package com.citiproject.User;
+package com.citi.entity;
 
 public class User {
 	
