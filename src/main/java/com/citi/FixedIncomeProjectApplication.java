@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * root_password
  * un
  * unique
- * @author Val.Sylenko
  *
  */
 @SpringBootApplication
